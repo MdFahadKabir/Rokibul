@@ -4,9 +4,11 @@ import { motion } from "framer-motion"
 import { useTranslation } from "@/utils/translation"
 import Link from "next/link"
 import { Download, Mail, Phone, MapPin, Linkedin, Twitter, Github } from "lucide-react"
+import { useTheme } from "@/context/theme-context"
 
 export default function CV() {
-  const { t } = useTranslation()
+  const { t } = useTranslation()  
+  const { theme } = useTheme()
 
   const container = {
     hidden: { opacity: 0 },
@@ -31,15 +33,27 @@ export default function CV() {
         transition={{ duration: 0.5 }}
         className="flex justify-between items-center mb-8"
       >
-        <h1 className="text-4xl font-bold">{t("cv.title")}</h1>
-        <Link
+        <h1 className={`text-4xl font-bold ${
+          theme === "light"
+            ? "text-black"
+            : theme === "dark"
+            ? "text-white"
+            : theme === "blue"
+            ? "text-blue-600"
+            : theme === "green"
+            ? "text-green-600"
+            : theme === "purple"
+            ? "text-purple-600"
+            : "text-black"
+        }`}>{t("cv.title")}</h1>
+        {/* <Link
           href="/cv.pdf"
           target="_blank"
           className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
         >
           <Download size={18} />
           {t("cv.download")}
-        </Link>
+        </Link> */}
       </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -49,7 +63,19 @@ export default function CV() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="lg:col-span-1"
         >
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg mb-6">
+          <div className={`rounded-xl p-6 shadow-lg mb-6 ${
+            theme === "light"
+              ? "bg-white"
+              : theme === "dark"
+              ? "bg-gray-800"
+              : theme === "blue"
+              ? "bg-blue-500"
+              : theme === "green"
+              ? "bg-green-500"
+              : theme === "purple"
+              ? "bg-purple-500"
+              : "bg-white"
+          }`}>
             <h2 className="text-2xl font-semibold mb-4">{t("cv.contact_info")}</h2>
             <ul className="space-y-3">
               <li className="flex items-center gap-3">

@@ -10,70 +10,9 @@ export default function Research() {
   const { t } = useTranslation()
   const [searchTerm, setSearchTerm] = useState("")
   const [filter, setFilter] = useState("all")
-
-  const papers = [
-    {
-      id: 1,
-      title: "Machine Learning Applications in Healthcare",
-      journal: "Journal of Medical Informatics",
-      year: "2023",
-      authors: "John Smith, Jane Doe, Robert Johnson",
-      category: "machine-learning",
-      abstract:
-        "This paper explores the applications of machine learning algorithms in healthcare diagnostics and treatment planning.",
-    },
-    {
-      id: 2,
-      title: "Neural Networks for Natural Language Processing",
-      journal: "Computational Linguistics Journal",
-      year: "2022",
-      authors: "John Smith, Alice Brown",
-      category: "neural-networks",
-      abstract:
-        "An in-depth analysis of how neural networks can be applied to solve complex natural language processing tasks.",
-    },
-    {
-      id: 3,
-      title: "Ethical Considerations in Artificial Intelligence",
-      journal: "AI Ethics Review",
-      year: "2022",
-      authors: "John Smith, Michael Wilson, Sarah Parker",
-      category: "ethics",
-      abstract:
-        "This paper discusses the ethical implications of deploying AI systems in various domains and proposes a framework for ethical AI development.",
-    },
-    {
-      id: 4,
-      title: "Reinforcement Learning in Robotics",
-      journal: "Robotics and Automation",
-      year: "2021",
-      authors: "John Smith, David Miller",
-      category: "machine-learning",
-      abstract:
-        "A comprehensive study on how reinforcement learning techniques can be used to train robotic systems for complex tasks.",
-    },
-    {
-      id: 5,
-      title: "Computer Vision Algorithms for Autonomous Vehicles",
-      journal: "Transportation Technology Review",
-      year: "2020",
-      authors: "John Smith, Jennifer Lee, Thomas Clark",
-      category: "computer-vision",
-      abstract:
-        "This research presents novel computer vision algorithms that improve object detection and tracking for autonomous vehicles.",
-    },
-    {
-      id: 6,
-      title: "Deep Learning Architectures: A Comparative Study",
-      journal: "Journal of Artificial Intelligence Research",
-      year: "2019",
-      authors: "John Smith, Robert Johnson",
-      category: "neural-networks",
-      abstract:
-        "A comparative analysis of various deep learning architectures and their performance on benchmark datasets.",
-    },
-  ]
-
+  const papers = t("research.papers")
+  console.log(papers)
+  
   const filteredPapers = papers.filter((paper) => {
     const matchesSearch =
       paper.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -121,13 +60,13 @@ export default function Research() {
             <input
               type="text"
               placeholder={t("research.search_placeholder")}
-              className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full pl-10 pr-4 py-3 rounded-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-600"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
           <select
-            className="px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            className="px-4 py-3 rounded-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-600"
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
           >
@@ -170,7 +109,7 @@ export default function Research() {
             </div>
             <p className="mb-4">{paper.abstract}</p>
             <Link
-              href={`/research/paper-${paper.id}`}
+              href={`/research/${paper.id}`}
               className="text-blue-600 hover:underline flex items-center gap-1"
             >
               {t("research.read_more")}

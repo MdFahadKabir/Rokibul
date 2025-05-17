@@ -1,61 +1,101 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { motion, AnimatePresence } from "framer-motion"
-import { useLanguage } from "@/context/language-context"
-import { useTranslation } from "@/utils/translation"
-import { Globe, GraduationCap } from "lucide-react"
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/context/language-context";
+import { useTranslation } from "@/utils/translation";
+import { Globe, GraduationCap } from "lucide-react";
+import { useTheme } from "@/context/theme-context";
 
 export default function Header() {
-  const pathname = usePathname()
-  const { language, setLanguage } = useLanguage()
-  const { t } = useTranslation()
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false)
+  const pathname = usePathname();
+  const { language, setLanguage } = useLanguage();
+  const { t } = useTranslation();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 10) {
-        setIsScrolled(true)
+        setIsScrolled(true);
       } else {
-        setIsScrolled(false)
+        setIsScrolled(false);
       }
-    }
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const toggleLangMenu = () => {
-    setIsLangMenuOpen(!isLangMenuOpen)
-  }
+    setIsLangMenuOpen(!isLangMenuOpen);
+  };
 
   const changeLanguage = (newLang) => {
-    setLanguage(newLang)
-    setIsLangMenuOpen(false)
-  }
+    setLanguage(newLang);
+    setIsLangMenuOpen(false);
+  };
 
   const navItems = [
     { name: t("nav.home"), path: "/" },
     { name: t("nav.cv"), path: "/cv" },
     { name: t("nav.research"), path: "/research" },
     { name: t("nav.blog"), path: "/blog" },
-    { name: t("nav.contact"), path: "/contact" },
-  ]
+    // { name: t("nav.contact"), path: "/contact" },
+  ];
+
+  const { theme } = useTheme();
+  console.log(theme);
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-md" : "bg-transparent"
+        isScrolled
+          ? theme === "light"
+            ? "bg-white/10 dark:bg-gray-900/90 backdrop-blur-md shadow-md"
+            : theme === "dark"
+            ? "bg-gray-900/10 backdrop-blur-md shadow-md"
+            : theme === "blue"
+            ? "bg-blue-900/10 backdrop-blur-md shadow-md"
+            : theme === "green"
+            ? "bg-green-900/10 backdrop-blur-md shadow-md"
+            : theme === "purple"
+            ? "bg-purple-900/10 backdrop-blur-md shadow-md"
+            : "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-md"
+          : "bg-transparent"
       }`}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           <Link href="/" className="flex items-center gap-2">
-            <GraduationCap className="w-8 h-8 text-blue-600" />
-            <span className="font-bold text-xl">Prof. Smith</span>
+            <GraduationCap className={`w-8 h-8 text-blue-600 ${
+                theme === "light"
+                  ? "text-blue-600"
+                  : theme === "dark"
+                  ? "text-blue-600"
+                  : theme === "blue"
+                  ? "text-blue-600"
+                  : theme === "green"
+                  ? "text-green-600"
+                  : theme === "purple"
+                  ? "text-purple-600"
+                  : "text-blue-600"
+              }`} />
+              <span className={`font-bold text-xl ${
+                theme === "light"
+                  ? "text-blue-600"
+                  : theme === "dark"
+                  ? "text-blue-600"
+                  : theme === "blue"
+                  ? "text-blue-600"
+                  : theme === "green"
+                  ? "text-green-600"
+                  : theme === "purple"
+                  ? "text-purple-600"
+                  : "text-blue-600"
+              }`}>Prof. Smith</span>
           </Link>
 
           {/* Desktop Navigation - Only visible on md screens and up */}
@@ -64,18 +104,35 @@ export default function Header() {
               <Link
                 key={item.path}
                 href={item.path}
-                className={`px-4 py-2 rounded-md transition-colors ${
-                  pathname === item.path ? "font-medium text-blue-600" : "hover:bg-gray-100 dark:hover:bg-gray-800"
-                }`}
+                className={`px-4 py-2 rounded-md transition-colors 
+                  ${
+                  pathname === item.path
+                    ? `font-medium text-blue-600 ${
+                        theme === "light"
+                          ? "text-blue-600"
+                          : theme === "dark"
+                          ? "text-blue-600"
+                          : theme === "blue"
+                          ? "text-blue-600"
+                          : theme === "green"
+                          ? "text-green-600"
+                          : theme === "purple"
+                          ? "text-purple-600"
+                          : "text-blue-600"
+                    }`
+                    : "hover:text-blue-500 hover:underline duration-700 dark:hover:bg-gray-800"
+                  }`
+                
+                }
               >
                 {item.name}
               </Link>
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
-            {/* Language Switcher */}
-            <div className="relative">
+          {/* <div className="flex items-center gap-2"> */}
+          {/* Language Switcher */}
+          {/* <div className="relative">
               <button
                 onClick={toggleLangMenu}
                 className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
@@ -110,10 +167,10 @@ export default function Header() {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
-          </div>
+            </div> */}
+          {/* </div> */}
         </div>
       </div>
     </header>
-  )
+  );
 }

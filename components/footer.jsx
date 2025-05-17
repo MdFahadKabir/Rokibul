@@ -3,26 +3,88 @@
 import Link from "next/link"
 import { useTranslation } from "@/utils/translation"
 import { GraduationCap, Mail, Phone, MapPin, Linkedin, Twitter, Github } from "lucide-react"
+import { useTheme } from "@/context/theme-context"
 
 export default function Footer() {
+  const { theme } = useTheme()
   const { t } = useTranslation()
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-gray-100 dark:bg-gray-900 py-12 hidden md:block">
+    <footer className={`bg-gray-100 dark:bg-gray-900 py-12 hidden md:block ${
+      theme === "light" || theme === "dark"     
+        ? "bg-gray-100"
+        : theme === "light"
+        ? "bg-gray-900"
+        : theme === "blue"
+        ? "bg-blue-900"
+        : theme === "green"
+        ? "bg-green-900"
+        : theme === "purple"
+        ? "bg-purple-900"
+        : "bg-gray-100"
+    }`}>
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <GraduationCap className="w-8 h-8 text-blue-600" />
-              <span className="font-bold text-xl">Prof. Smith</span>
+              <GraduationCap className={`w-8 h-8 text-blue-600 ${
+                theme === "light"
+                  ? "text-blue-600"
+                  : theme === "dark"
+                  ? "text-blue-600"
+                  : theme === "blue"
+                  ? "text-blue-600"
+                  : theme === "green"
+                  ? "text-green-600"
+                  : theme === "purple"
+                  ? "text-purple-600"
+                  : "text-blue-600"
+              }`} />
+                <span className={`font-bold text-xl ${
+                theme === "light"
+                  ? "text-blue-600"
+                  : theme === "dark"
+                  ? "text-blue-600"
+                  : theme === "blue"
+                  ? "text-blue-600"
+                  : theme === "green"
+                  ? "text-green-600"
+                  : theme === "purple"
+                  ? "text-purple-600"
+                  : "text-blue-600"
+              }`}>Prof. Smith</span>
             </Link>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">{t("footer.description")}</p>
+            <p className={` mb-4 ${
+              theme === "light"
+                ? "text-gray-600"
+                : theme === "dark"
+                ? "text-gray-300"
+                : theme === "blue"
+                ? "text-blue-600"
+                : theme === "green"
+                ? "text-green-600"
+                : theme === "purple"
+                ? "text-purple-600"
+                : "text-gray-600"
+            }`}>{t("footer.description")}</p>
             <div className="flex gap-4">
               <Link
                 href="https://linkedin.com"
                 aria-label="LinkedIn"
-                className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                className={`hover:text-blue-600 dark:hover:text-blue-400 transition-colors ${
+                  theme === "light"
+                    ? "text-gray-600"
+                    : theme === "dark"
+                    ? "text-gray-300"
+                    : theme === "blue"
+                    ? "text-blue-600 hover:text-blue-700"
+                    : theme === "green"
+                    ? "text-green-600 hover:text-green-700"
+                    : theme === "purple"
+                    ? "text-purple-600 hover:text-purple-700"
+                    : "text-gray-600 hover:text-blue-600"
+                }`}
               >
                 <Linkedin size={20} />
               </Link>
@@ -77,14 +139,14 @@ export default function Footer() {
                   {t("nav.blog")}
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   href="/contact"
                   className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >
                   {t("nav.contact")}
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
           <div>
